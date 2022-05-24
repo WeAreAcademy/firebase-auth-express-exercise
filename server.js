@@ -17,7 +17,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/secret", (req, res) => {
-  console.log("req for secret: ", { headers: req.headers });
+  //Get authorization header value and trim "Bearer " prefix.
+  //To get idToken
   const authHeader = req.get("Authorization");
   if (!authHeader || authHeader.length < 20) {
     return res.status(401).send("no or bad auth header");
@@ -28,12 +29,12 @@ app.get("/secret", (req, res) => {
     .verifyIdToken(idToken)
     .then((decodedToken) => {
       const uid = decodedToken.uid;
-      console.log("VERIFIED TOKEN", uid, decodedToken);
+      console.log("VERIFIED TOKEN for uid: ", uid);
       res.send("🤐: " + getSecretWisdom() + "🤫");
     })
     .catch((error) => {
       console.error("NOT A GOOD TOKEN - don't reveal secret");
-      res.send("I will not reveal the secrets to you!"); //in reality we'd send a 401 status?
+      res.status(401).send("I will not reveal the secrets to you!"); //in reality we'd send a 401 status?
     });
 });
 
