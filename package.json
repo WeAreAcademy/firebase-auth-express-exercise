@@ -2,9 +2,10 @@
   "name": "express-auth-with-firebase-auth",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "nbogie",
+  "author": "neill bogie",
   "license": "MIT",
   "scripts": {
+    "start": "node server.js",
     "start:dev": "nodemon server.js"
   },
   "dependencies": {
