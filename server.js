@@ -1,5 +1,5 @@
 const express = require("express");
-const { getSecretWisdom } = require("./bookOfSecrets");
+const { getAncientWisdom } = require("./bookOfAncientWisdom");
 
 const cors = require("cors");
 
@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 //TODO: Your task will be to secure this route to prevent access by those who are not, at least, logged in.
-app.get("/secret", (req, res) => {
+app.get("/wisdom", (req, res) => {
   //Eventual plan:
   //1. authHeader = get the value of the Authorization header
   //2. potentialToken = strip the "Bearer " prefix from authHeader
@@ -22,7 +22,7 @@ app.get("/secret", (req, res) => {
   //4.     return protected info in response
   //5. else
   //       say access denied in response
-  res.send("🤐: " + getSecretWisdom() + "🤫");
+  res.send("🤐: " + getAncientWisdom() + "🤫");
 });
 
 app.listen(port, () => {

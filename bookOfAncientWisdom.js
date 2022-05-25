@@ -1,4 +1,6 @@
-function getSecretWisdom() {
+//Not an important function at all.
+/** Return a fun sentence (string) which we'll pretend is wisdom to be protected. */
+function getAncientWisdom() {
   const articles = ["the"];
   const nouns =
     "arrest-warrant band bear bearclaw beatboxer board-game boardgamer boyfriend bus call-centre cinnamon coroner cowboy crepe detective dog donut dungeon-master experiment falcon game girlfriend good-bye helicopter icon kangaroo love magician ninja ore particle-accelerator piano pirate pizza playwright poem policy potato reviewer rhyme riot robot rule-book science screenplay shaman shark song space-mobile submarine summoning teacher theory thought worker".split(
@@ -12,12 +14,20 @@ function getSecretWisdom() {
     "analysed arrested ate befuddled betrayed chastised composed compromised conceived confused cooked coveted created fed fought harassed hugged invented killed kissed murdered nagged painted praised programmed robbed sang seduced serenaded sued suffocated summoned taught tutored treated wrestled".split(
       " "
     );
-  return [articles, adjectives, nouns, verbs, articles, nouns]
-    .map(pick)
-    .join(" ");
+  const sentenceAsArray = [
+    articles,
+    adjectives,
+    nouns,
+    verbs,
+    articles,
+    adjectives,
+    nouns,
+  ].map(pick);
+
+  return sentenceAsArray.join(" ");
 }
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-module.exports = { getSecretWisdom };
+module.exports = { getAncientWisdom };
