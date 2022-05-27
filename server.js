@@ -8,17 +8,15 @@ const admin = require("firebase-admin");
 if (process.env.NODE_ENV === "production") {
   //heroku, not local
   const base64Config = process.env.GOOGLE_CONFIG_BASE64;
-  console.log("Got SECRET base64 config of length: ", base64Config.length);
-  const firebaseAppOptions = {
-    credential: admin.credential.cert(
-      JSON.parse(
-        Buffer.from(process.env.GOOGLE_CONFIG_BASE64, "base64").toString(
-          "ascii"
-        )
-      )
-    ),
-  };
-  admin.initializeApp(firebaseAppOptions);
+  if (!base64Config) {
+    console.error("no env var GOOGLE_CONFIG_BASE64");
+    process.exit(1);
+  }
+  console.log("Got SECRET base64 config of length: ", base64Config?.length);
+  const fromJSON = JSON.parse(
+    Buffer.from(process.env.GOOGLE_CONFIG_BASE64, "base64").toString("ascii")
+  );
+  admin.initializeApp({ credential: admin.credential.cert(fromJSON) });
 } else {
   //local
   process.env.GOOGLE_APPLICATION_CREDENTIALS =
