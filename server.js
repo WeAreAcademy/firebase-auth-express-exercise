@@ -16,11 +16,13 @@ if (process.env.NODE_ENV === "production") {
   const fromJSON = JSON.parse(
     Buffer.from(process.env.GOOGLE_CONFIG_BASE64, "base64").toString("ascii")
   );
+  console.log("initialising firebase admin from GOOGLE_CONFIG_BASE64 env var");
   admin.initializeApp({ credential: admin.credential.cert(fromJSON) });
 } else {
   //local
   process.env.GOOGLE_APPLICATION_CREDENTIALS =
     "./secrets/firebase-service-account-secrets.json";
+  console.log("initialising firebase admin from local file");
   admin.initializeApp();
 }
 const app = express();
