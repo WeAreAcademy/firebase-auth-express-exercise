@@ -22,8 +22,14 @@ app.get("/", (req, res) => {
   res.send("Time (not secret): " + new Date());
 });
 
-//TODO: Your task will be to secure this route to prevent access by those who are not, at least, logged in.
 app.get("/wisdom", (req, res) => {
+  //Plan:
+  //1. authHeader = get the value of the Authorization header
+  //2. potentialToken = strip the "Bearer " prefix from authHeader
+  //3. if (potentialToken is verified legit)
+  //4.     return protected info in response
+  //5. else
+  //       say access denied in response
   const authHeaderValue = req.get("Authorization") || "";
 
   const [junk, accessToken] = authHeaderValue.split(" ");
@@ -41,14 +47,29 @@ app.get("/wisdom", (req, res) => {
     .catch((nope) => {
       res.status(401).send("your token didn't check out! no wisdom for you.");
     });
+});
 
-  //Eventual plan:
-  //1. authHeader = get the value of the Authorization header
-  //2. potentialToken = strip the "Bearer " prefix from authHeader
-  //3. if (potentialToken is verified legit)
-  //4.     return protected info in response
-  //5. else
-  //       say access denied in response
+app.get("/promoteMe", (req, res) => {
+  const authHeaderValue = req.get("Authorization") || "";
+
+  const [junk, accessToken] = authHeaderValue.split(" ");
+  if (!accessToken || accessToken.length < 10) {
+    console.log("ignoring user with bad or missing authorization header value");
+    res.status(401).send("no or bad auth header");
+    return;
+  }
+  //Anyone who is logged in can promote themselves.  Not normal, if you're wondering!
+  getAuth()
+    .verifyIdToken(accessToken)
+    .then((decodedToken) => {
+      console.log("Verified token, so will now promote: ", decodedToken);
+      getAuth().setCustomUserClaims(decodedToken.uid, { forumModerator: true });
+
+      res.send("!you have been promoted!");
+    })
+    .catch((nope) => {
+      res.status(401).send("Your token didn't verify! Action denied.");
+    });
 });
 
 app.listen(port, () => {
