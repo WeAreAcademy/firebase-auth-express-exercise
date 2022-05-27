@@ -1,13 +1,30 @@
-process.env.GOOGLE_APPLICATION_CREDENTIALS =
-  "./secrets/firebase-service-account-secrets.json";
-
 const express = require("express");
 const { getAncientWisdom } = require("./bookOfAncientWisdom");
 const { getAuth } = require("firebase-admin/auth");
 const cors = require("cors");
 
 const admin = require("firebase-admin");
-admin.initializeApp();
+
+if (process.env.NODE_ENV === "production") {
+  //heroku, not local
+  const base64Config = process.env.GOOGLE_CONFIG_BASE64;
+  console.log("Got SECRET base64 config of length: ", base64Config.length);
+  const firebaseAppOptions = {
+    credential: admin.credential.cert(
+      JSON.parse(
+        Buffer.from(process.env.GOOGLE_CONFIG_BASE64, "base64").toString(
+          "ascii"
+        )
+      )
+    ),
+  };
+  admin.initializeApp(firebaseAppOptions);
+} else {
+  //local
+  process.env.GOOGLE_APPLICATION_CREDENTIALS =
+    "./secrets/firebase-service-account-secrets.json";
+  admin.initializeApp();
+}
 const app = express();
 app.use(cors());
 
