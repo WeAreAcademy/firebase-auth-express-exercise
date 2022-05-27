@@ -1,4 +1,4 @@
-/**
+/*
 
 ## Tool for preparing firebase credentials for heroku deployment
 
@@ -16,7 +16,7 @@ Heroku doesn't let you store _files_, only env vars. We could create multiple en
 
 0. Ensure the `secrets/` folder is git-ignored as a whole. (We're about to add something sensitive to it.)
 1. Ensure your service account credentials are in exactly `secrets/firebase-service-account-secrets.json`
-2. run `node prepareBase64Config.js > secrets/base64Secret.txt`
+2. run `node prepareBase64Config.js > secrets/base64Secret.txt`  (or `yarn run prep-heroku-env-var`)
 3. In your heroku dashboard for your app, go to settings, then "reveal config vars"
 4. Add a config var with a key of GOOGLE_CONFIG_BASE64 and for its value, copy and paste the exact contents of base64Secret.txt, making sure to get it all very precisely - no extra spaces, no missing characters.
 5. In the top right of heroku dashboard, choose more: restart all dynos

@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "start:dev": "nodemon server.js"
+    "start:dev": "nodemon server.js",
+    "prep-heroku-env-var": "node prepareBase64Config.js > secrets/base64Secret.txt"
   },
   "dependencies": {
     "cors": "^2.8.5",
