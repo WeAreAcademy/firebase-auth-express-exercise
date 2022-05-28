@@ -6,4 +6,4 @@ A first-steps set of exercises using firebase-auth with a custom back-end (expre
 
 We have to do something clunky to get the details of our service account credentials loaded by heroku.
 
-Read the comments in `prepareBase64.js` for how.
+Read the comments in `prepareBase64Config.js` for how.
