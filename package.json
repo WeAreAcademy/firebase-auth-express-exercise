@@ -1,12 +1,12 @@
 {
   "name": "express-auth-with-firebase-auth",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "author": "neill bogie",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "nodemon server.js",
+    "start": "node src/server.js",
+    "start:dev": "nodemon src/server.js",
     "prep-heroku-env-var": "node prepareBase64Config.js > secrets/base64Secret.txt"
   },
   "dependencies": {

@@ -1,9 +1,9 @@
 /*
 
-## Tool for preparing firebase credentials for heroku deployment
+## Tool for preparing firebase service account credentials for heroku deployment
 
 This program squishes and logs your secret service-account config into a base64-encoded
-string suitable for an env var value on heroku.
+string suitable for the value of a single environment variable on heroku.
 
 WARNING: logs sensitive information to console.
 
@@ -20,6 +20,10 @@ Heroku doesn't let you store _files_, only env vars. We could create multiple en
 3. In your heroku dashboard for your app, go to settings, then "reveal config vars"
 4. Add a config var with a key of GOOGLE_CONFIG_BASE64 and for its value, copy and paste the exact contents of base64Secret.txt, making sure to get it all very precisely - no extra spaces, no missing characters.
 5. In the top right of heroku dashboard, choose more: restart all dynos
+
+### Credits:
+
+Based on Huzaifa Iftikhar's answer, here https://exchangetuts.com/deploying-firebase-app-with-service-account-to-heroku-environment-variables-with-dotenv-1639611308022422
 */
 
 const config = require("./secrets/firebase-service-account-secrets.json");
